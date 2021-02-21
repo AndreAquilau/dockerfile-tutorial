@@ -166,6 +166,9 @@ EXPOSE 22
 
 EXPOSE 3090
 
-CMD    ["/usr/sbin/sshd", "-D"]
+CMD    ["/usr/sbin/sshd", "-D"] # OR CMD  /usr/sbin/sshd && -D
 ```
+#### Instru
 
+#### Referemces
+[Graffiti Display Type](atorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20)
