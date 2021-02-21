@@ -81,18 +81,43 @@ FROM ubuntu:latest AS servidor
 
 LABEL "maintainer"="AndréAquilau" "version"="1.0.0" "description"="servidor linux ubuntu"
 
-RUN apt-get update
-
-RUN apt-get upgrade
-
-RUN apt install -y curl
-
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
-
-RUN export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")" [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-
-RUN nvm install 14.15.5
-
-RUN nvm use 14.15.5
+#Camada 1
+RUN apt-get update && apt-get upgrade && apt install curl
 ```
 
+#### Instrução EXPOSE and CMD
+A instrução EXPOSE informa ao docker ficar escutando determinada porta.
+> EXPOSE <port>
+
+<br>
+
+A instrução CMD é utilizada para passar um comando a ser executado <br>
+assim que o container for iniciado.
+<br>
+
+> CMD /bin/bash or CMD ["/bin/bash"] 
+
+```Dockerfile
+FROM       ubuntu:latest
+LABEL  "Aleksandar Diklic"="https://github.com/rastasheep"
+
+RUN apt-get update
+
+RUN apt-get install -y openssh-server
+RUN mkdir /var/run/sshd
+
+RUN echo 'root:root' |chpasswd
+
+RUN sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
+RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
+
+RUN mkdir /root/.ssh
+
+RUN apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+EXPOSE 22
+EXPOSE 3090
+
+CMD    ["/usr/sbin/sshd", "-D"]
+```
