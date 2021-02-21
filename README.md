@@ -74,3 +74,25 @@ f63181f19b2f   4 weeks ago      /bin/sh -c #(nop)  CMD ["/bin/bash"]            
 <missing>      4 weeks ago      /bin/sh -c #(nop) ADD file:2a90223d9f00d31e3…   72.9MB 
 ```
 
+#### Instrução RUN
+É um comando que roda em um shell.
+```Dockerfile
+FROM ubuntu:latest AS servidor  
+
+LABEL "maintainer"="AndréAquilau" "version"="1.0.0" "description"="servidor linux ubuntu"
+
+RUN apt-get update
+
+RUN apt-get upgrade
+
+RUN apt install -y curl
+
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
+
+RUN export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")" [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+RUN nvm install 14.15.5
+
+RUN nvm use 14.15.5
+```
+

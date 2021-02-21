@@ -1,4 +1,6 @@
-FROM ubuntu:latest AS servidor
+FROM ubuntu:latest AS servidor  
 
-LABEL "maintainer"="André Aquilau" "version"="1.0.0" "description"="servidor ubuntu nodejs"
+LABEL "maintainer"="AndréAquilau" "version"="1.0.0" "description"="servidor linux ubuntu"
+
+RUN apt-get update && apt-get upgrade && apt install curl
 
