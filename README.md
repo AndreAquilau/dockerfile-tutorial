@@ -121,3 +121,51 @@ EXPOSE 3090
 
 CMD    ["/usr/sbin/sshd", "-D"]
 ```
+
+#### Instrução ADD 
+A instrução ADD serve para copiar novos arquivos e diretorios <br>
+ou arquivos de alguma url para dentro da imagem.
+```Dockerfile
+COPY [--CHOWN=<USER>:GROUP] <src>...<dest>
+```
+#### Instrução COPY 
+A instrução COPY faz básicamente a mesma coisa que o ADD, copia arquivos ou diretorios <br>
+para dentro da imagem. 
+```Dockerfile
+COPY [--CHOWN=<USER>:GROUP] <src>...<dest>
+```
+##### Diferença entre COPY e ADD
+A diferença é que o COPY copia da máquina local recebendo uma origem <br>
+e passando também um destino para dentro da imagem. Já o ADD copia arquivos de url.
+```Dockerfile   
+FROM       ubuntu:latest
+
+LABEL  "maintaner"="AndreAquilau"
+
+RUN apt-get update
+
+RUN apt-get install -y openssh-server vim
+
+RUN mkdir /var/run/sshd
+
+RUN echo 'root:root' |chpasswd
+
+RUN sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
+RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
+
+RUN mkdir /root/.ssh
+
+RUN apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN echo 'Banner /etc/banner' >> /etc/ssh/sshd_config
+
+COPY etc/banner /etc/
+
+EXPOSE 22
+
+EXPOSE 3090
+
+CMD    ["/usr/sbin/sshd", "-D"]
+```
+

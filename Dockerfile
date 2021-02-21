@@ -1,10 +1,11 @@
 FROM       ubuntu:latest
 
-LABEL  "Aleksandar Diklic"="https://github.com/rastasheep"
+LABEL  "maintaner"="AndreAquilau"
 
 RUN apt-get update
 
-RUN apt-get install -y openssh-server
+RUN apt-get install -y openssh-server vim
+
 RUN mkdir /var/run/sshd
 
 RUN echo 'root:root' |chpasswd
@@ -16,6 +17,10 @@ RUN mkdir /root/.ssh
 
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN echo 'Banner /etc/banner' >> /etc/ssh/sshd_config
+
+COPY etc/banner /etc/
 
 EXPOSE 22
 
