@@ -40,4 +40,10 @@ EXPOSE 22
 
 EXPOSE 3090
 
+RUN /bin/bash -l -c "mkdir /workspace"
+
+RUN /bin/bash -l -c "chmod 777 /workspace"
+
+VOLUME /workspace
+
 CMD    ["/usr/sbin/sshd", "-D"]
