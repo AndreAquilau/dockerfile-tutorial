@@ -1,10 +1,10 @@
-FROM       ubuntu:latest
+FROM ubuntu:latest
 
 LABEL  "maintaner"="AndreAquilau"
 
 RUN apt-get update
 
-RUN apt-get install -y openssh-server vim curl
+RUN apt-get install -y openssh-server vim curl git sudo
 
 RUN mkdir /var/run/sshd
 

@@ -283,5 +283,18 @@ VOLUME /workspace
 CMD    ["/usr/sbin/sshd", "-D"] # OR CMD  /usr/sbin/sshd && -D
 ```
 
+#### Create Repository in DockerHub
+```bash
+$ sudo docker login 
+```
+##### Subindo imagem dockerhub
+```bash
+
+$ sudo docker tag 63825b662fe0 andreaquilau/nodejs
+
+$ sudo docker push andreaquilau/nodejs:latest
+
+```
+
 #### Referemces
 [Graffiti Display Type](atorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20)
